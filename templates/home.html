@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classification Crime</title>
+    <!-- <img src={{ url_for('static', filename='background.jpeg') }}> -->
+    <style>
+        body {
+            background-size: 100% auto;
+            font-family: Lato, sans-serif;
+            font-weight: 400;
+            color: var(--color-white);
+            margin: 0;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            z-index: -1;
+            background-image: url("{{ url_for('static', filename='background.jpg') }}");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        h1 {
+            color: rgb(198, 252, 184)
+        }
+
+        strong {
+            color: rgb(249, 253, 0)
+        }
+
+        form {
+            width: 400px;
+            margin: auto;
+            text-align: center;
+            padding: 20px;
+            border-radius: 5px;
+            background-color: rgba(99, 220, 241, 0.3);
+        }
+
+        form input {
+            width: 200px;
+            height: 30px;
+            margin: 20px;
+            border: 2px solid rgb(230, 196, 196);
+            border-radius: 5px;
+        }
+
+        form button {
+            font-weight: bold;
+            width: 100px;
+            height: 40px;
+            border: none;
+            background-color: rgb(19, 160, 196);
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="login-form-container">
+        <form action="classify" method="POST">
+            <div class="card" style="width: 400px">
+                <div class="card-content">
+                    <div class="media">
+                        <div>
+                            <a id="textHighlight" href="/plot" style="color: #fff; font-size: 20px;">Khám phá biểu đồ</a>
+                        </div>
+                        <div class="is-size-4 has-text-centered">
+                            <h1>Crime Classification</h1>
+                        </div>
+                        <input type="text" name="valueFeatures" id="valueFeatures" placeholder="eg: 0.1,0.2,0.3,0.11">
+                        <button type="button" onclick="myFunction(this)" style="cursor: pointer;">Fill</button>
+
+                        <script>
+                            function myFunction(elmnt) {
+                                obj = document.getElementById("valueFeatures");
+                                if (obj.value != "") {
+                                    const myArray = obj.value.split(",");
+                                    if(myArray.length == 10) {
+                                        document.getElementById('PctKids2Par').value = myArray[0];
+                                        document.getElementById('PctIlleg').value = myArray[1];
+                                        document.getElementById('PctFam2Par').value = myArray[2];
+                                        document.getElementById('racePctWhite').value = myArray[3];
+                                        document.getElementById('PctYoungKids2Par').value = myArray[4];
+                                        document.getElementById('pctWInvInc').value = myArray[5];
+                                        document.getElementById('PctTeen2Par').value = myArray[6];
+                                        document.getElementById('FemalePctDiv').value = myArray[7];
+                                        document.getElementById('pctWPubAsst').value = myArray[8];
+                                        document.getElementById('TotalPctDiv').value = myArray[9];
+                                    }
+                                }
+                            }
+                        </script>
+                    </div>
+                    <div class="content">
+                        <strong style="color: rgb(0, 255, 34); text-align: left;">* trẻ em ở trong gia đình có hai cha mẹ</strong>
+                        <div class="field">
+                            <p class="control">
+                                <strong>PctKids2Par:</strong> <input class="input" type="number" value='0.00'
+                                    step='0.01' name="PctKids2Par" id="PctKids2Par">
+                            </p>
+                        </div>
+
+                        <strong style="color: rgb(0, 255, 34); text-align: left;">* trẻ sinh ra chưa bao giờ kết hôn</strong>
+                        <div class="field">
+                            <p class="control">
+                                <strong>PctIlleg:</strong> <input class="input" type="number" value='0.00' step='0.01'
+                                    name="PctIlleg" id="PctIlleg">
+                            </p>
+                        </div>
+
+                        <strong style="color: rgb(0, 255, 34); text-align: left;">* các gia đình (có trẻ em) do hai cha mẹ làm chủ hộ</strong>
+                        <div class="field">
+                            <p class="control">
+                                <strong>PctFam2Par</strong> <input class="input" type="number" value='0.00' step='0.01'
+                                    name="PctFam2Par" id="PctFam2Par">
+                            </p>
+                        </div>
+
+                        <strong style="color: rgb(0, 255, 34); text-align: left;">* dân số là người da trắng</strong>
+                        <div class="field">
+                            <p class="control">
+                                <strong>racePctWhite</strong> <input class="input" type="number" value='0.00'
+                                    step='0.01' name="racePctWhite" id="racePctWhite">
+                            </p>
+                        </div>
+
+                        <strong style="color: rgb(0, 255, 34); text-align: left;">* trẻ 4 tuổi trở xuống có hai cha mẹ</strong>
+                        <div class="field">
+                            <p class="control">
+                                <strong>PctYoungKids2Par</strong> <input class="input" type="number" value='0.00'
+                                    step='0.01' name="PctYoungKids2Par" id="PctYoungKids2Par">
+                            </p>
+                        </div>
+
+                        <strong style="color: rgb(0, 255, 34); text-align: left;">* gia đình có thu nhập từ đầu tư,tiền thuê trong 1989</strong>
+                        <div class="field">
+                            <p class="control">
+                                <strong>pctWInvInc</strong> <input class="input" type="number" value='0.00' step='0.01'
+                                    name="pctWInvInc" id="pctWInvInc">
+                            </p>
+                        </div>
+
+                        <strong style="color: rgb(0, 255, 34); text-align: left;">* trẻ em từ 12-17 tuổi có cha mẹ</strong>
+                        <div class="field">
+                            <p class="control">
+                                <strong>PctTeen2Par</strong> <input class="input" type="number" value='0.00' step='0.01'
+                                    name="PctTeen2Par" id="PctTeen2Par">
+                            </p>
+                        </div>
+
+                        <strong style="color: rgb(0, 255, 34); text-align: left;">* phụ nữ đã ly hôn</strong>
+                        <div class="field">
+                            <p class="control">
+                                <strong>FemalePctDiv</strong> <input class="input" type="number" value='0.00'
+                                    step='0.01' name="FemalePctDiv" id="FemalePctDiv">
+                            </p>
+                        </div>
+
+                        <strong style="color: rgb(0, 255, 34); text-align: left;">* gia đình có thu nhập từ trợ cấp</strong>
+                        <div class="field" style="text-align: center;">
+                            <p class="control">
+                                <strong>pctWPubAsst</strong> <input class="input" type="number" value='0.00' step='0.01'
+                                    name="pctWPubAsst" id="pctWPubAsst">
+                            </p>
+                        </div>
+
+                        <strong style="color: rgb(0, 255, 34); text-align: left;">* dân số đã ly hôn </strong>
+                        <div class="field" style="text-align: center;">
+                            <p class="control">
+                                <strong>TotalPctDiv</strong> <input class="input" type="number" value='0.00' step='0.01'
+                                    name="TotalPctDiv" id="TotalPctDiv">
+                            </p>
+                        </div>
+
+                        
+                        <div class="field">
+                            <button class="button is-fullwidth is-rounded is-success" style="cursor: pointer;">Predict</button>
+                        </div>
+                        <div class="field" id="result">
+                            <h1>HighCrime: <b style="color:red;">{{ variety_Bayes }}</b></h1>
+                        </div>
+                        <br>
+                        <em>Đề tài 21</em><br>
+                        <em>Họ Tên: Phan Duy Anh B1812252</em><br>
+                        <em>Họ Tên: Nguyễn Quốc Kiệt B18122</em>
+                    </div>
+                </div>
+        </form>
+    </div>
+
+    {% if bookmarks %}
+    <script>
+        var element_to_scroll_to = document.getElementById('result');
+        element_to_scroll_to.scrollIntoView();
+            // console.log('scroll');
+    </script>
+    {% endif %}
+
+    <script type="text/javascript">
+        obj = document.getElementById("textHighlight");
+        obj.style.color = "pink";
+        setInterval(changeColor, 200);
+
+        function changeColor() {
+            if (obj.style.color == "pink") {
+                obj.style.color = "aqua";
+            } else if (obj.style.color == "aqua") {
+                obj.style.color = "orange";
+            } else if (obj.style.color == "orange") {
+                obj.style.color = "greenyellow";
+            } else {
+                obj.style.color = "pink";
+            }
+        }
+    </script>
+</body>
+
+</html>

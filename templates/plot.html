@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biểu đồ</title>
+    <style>
+                body {
+            background-size: 100% auto;
+            font-family: Lato, sans-serif;
+            font-weight: 400;
+            color: var(--color-white);
+            margin: 0;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            z-index: -1;
+            background-image: url("{{ url_for('static', filename='background.jpg') }}");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+    </style>
+</head>
+<body>
+    <p style="text-align: center; padding: 10px;"><a id="textHighlight" href="/" style="color: #fff; font-size: 20px;">Về trang Home</a></p>
+    <div style="text-align: center;">
+        <p style="color: #fff;">{{ name0 }}</p>
+        <img src='{{ url0 }}' alt="Chart" height="50%" width="50%">
+    </div>
+    <hr />
+    <div style="text-align: center;">
+        <p style="color: #fff;">{{ name1 }}</p>
+        <img src='{{ url1 }}' alt="Chart" height="50%" width="50%">
+    </div>
+    <hr />
+    <div style="text-align: center;">
+        <p style="color: #fff;">{{ name2 }}</p>
+        <img src='{{ url2 }}' alt="Chart" height="50%" width="50%">
+    </div>
+    <hr />
+    <div style="text-align: center;">
+        <p style="color: #fff;">{{ name3 }}</p>
+        <img src='{{ url3 }}' alt="Chart" height="50%" width="50%">
+    </div>
+    <script type="text/javascript">
+        obj = document.getElementById("textHighlight");
+        obj.style.color = "pink";
+        setInterval(changeColor, 200);
+
+        function changeColor() {
+            if (obj.style.color == "pink") {
+                obj.style.color = "aqua";
+            } else if (obj.style.color == "aqua") {
+                obj.style.color = "orange";
+            } else if (obj.style.color == "orange") {
+                obj.style.color = "greenyellow";
+            } else {
+                obj.style.color = "pink";
+            }
+        }
+    </script>
+</body>
+</html>
